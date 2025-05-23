@@ -12,7 +12,7 @@ Installation:
 
 1. Cloning the repository from github:
 ```bash
-git clone https://github.com/your-username/automatic-image-enhancer.git
+git clone https://github.com/rohxn08/Automatic-Image-Enhancer.git
 ```
 2. Installing the required packages from requirements.txt:
 ```bash
