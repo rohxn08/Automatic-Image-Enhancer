@@ -13,16 +13,36 @@ st.markdown("<h1 style='text-align: center;'>Automatic Image Enhancer</h1>", uns
 # Custom CSS to ensure equal height cards
 st.markdown("""
 <style>
-    [data-testid="stVerticalBlockBorderWrapper"] {
-        min-height: 600px;
+    /* Make the columns equal height */
+    [data-testid="stHorizontalBlock"] {
+        align-items: stretch;
+    }
+    
+    [data-testid="stColumn"] {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
     }
-    [data-testid="stVerticalBlockBorderWrapper"] > div {
+    
+    /* This is the internal wrapper for the column content */
+    [data-testid="stVerticalBlock"] {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+    }
+    
+    /* This is the border container */
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* Ensure it takes up the full height available from the flex stretch */
+        height: 100%; 
+        min-height: 600px;
+    }
+    
+    [data-testid="stVerticalBlockBorderWrapper"] > div {
+        width: 100%;
         align-items: center;
     }
 </style>
