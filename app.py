@@ -6,7 +6,7 @@ from PIL import Image
 
 st.set_page_config(page_title="Automatic Image Enhancer", layout="wide")
 
-st.title("Automatic Image Enhancer")
+st.markdown("<h1 style='text-align: center;'>Automatic Image Enhancer</h1>", unsafe_allow_html=True)
 st.write("Upload an image to automatically enhance its brightness and contrast.")
 
 col1, col2 = st.columns(2)
