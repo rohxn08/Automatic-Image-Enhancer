@@ -13,37 +13,37 @@ st.markdown("<h1 style='text-align: center;'>Automatic Image Enhancer</h1>", uns
 # Custom CSS to ensure equal height cards
 st.markdown("""
 <style>
-    /* Make the columns equal height */
-    [data-testid="stHorizontalBlock"] {
-        align-items: stretch;
-    }
-    
-    [data-testid="stColumn"] {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    /* This is the internal wrapper for the column content */
-    [data-testid="stVerticalBlock"] {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    /* This is the border container */
+    /* Force both cards to be exactly the same height */
     [data-testid="stVerticalBlockBorderWrapper"] {
-        flex-grow: 1;
+        height: 950px; /* Large fixed height to fit image + button */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        /* Ensure it takes up the full height available from the flex stretch */
-        height: 100%; 
-        min-height: 600px;
+        overflow-y: auto; /* Allow scrolling inside the card if content is too big */
     }
     
     [data-testid="stVerticalBlockBorderWrapper"] > div {
         width: 100%;
         align-items: center;
+    }
+
+    /* Custom styling for the download button to match file uploader */
+    .stDownloadButton button {
+        background-color: transparent;
+        color: inherit;
+        border: 1px solid rgba(250, 250, 250, 0.2);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+    }
+    
+    .stDownloadButton button:hover {
+        border-color: #ff4b4b;
+        color: #ff4b4b;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -90,9 +90,6 @@ with col2:
             # Enhance image
             enhanced_image = enhance_image(opencv_image)
             
-            # Display enhanced image
-            st.image(enhanced_image, channels="BGR", use_container_width=True)
-            
             # Prepare download
             enhanced_rgb = cv2.cvtColor(enhanced_image, cv2.COLOR_BGR2RGB)
             im_pil = Image.fromarray(enhanced_rgb)
@@ -100,17 +97,24 @@ with col2:
             im_pil.save(buf, format="JPEG")
             byte_im = buf.getvalue()
             
-            # Center the download button
-            st.markdown("<div style='text-align: center; margin-top: 20px;'>", unsafe_allow_html=True)
+            # Download button at the top
             st.download_button(
                 label="Download Enhanced Image",
                 data=byte_im,
                 file_name="enhanced_image.jpg",
-                mime="image/jpeg"
+                mime="image/jpeg",
+                icon=":material/download:",
+                use_container_width=True
             )
-            st.markdown("</div>", unsafe_allow_html=True)
+            
+            # Display enhanced image
+            st.image(enhanced_image, channels="BGR", use_container_width=True)
             
         else:
+            # Disabled/Dummy download button at the top
+            if st.button("Download Enhanced Image", disabled=False, icon=":material/download:", use_container_width=True):
+                st.warning("Please upload an image first!")
+                
             # Placeholder content
             st.markdown(
                 """
