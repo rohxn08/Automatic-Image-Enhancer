@@ -10,6 +10,24 @@ st.set_page_config(page_title="Automatic Image Enhancer", layout="wide")
 # Center the title using Markdown/HTML, but keep default font/colors
 st.markdown("<h1 style='text-align: center;'>Automatic Image Enhancer</h1>", unsafe_allow_html=True)
 
+# Custom CSS to ensure equal height cards
+st.markdown("""
+<style>
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        min-height: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    [data-testid="stVerticalBlockBorderWrapper"] > div {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Add some vertical spacing
 st.write("")
 st.write("")
